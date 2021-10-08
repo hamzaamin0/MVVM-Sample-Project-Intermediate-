@@ -18,6 +18,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         setupTableView()
         fetchCoursesData()
+        setupNavBar()
         // Do any additional setup after loading the view.
     }
 
@@ -26,6 +27,13 @@ class ViewController: UIViewController {
         coursesTableView.register(CoursesTableViewCell.nib(), forCellReuseIdentifier: CoursesTableViewCell.identifier)
         coursesTableView.delegate = self
         coursesTableView.dataSource = self
+        
+        coursesTableView.separatorInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
+        coursesTableView.separatorColor = .mainTextBlue
+        coursesTableView.backgroundColor = UIColor.rgb(r: 12, g: 47, b: 57)
+        coursesTableView.rowHeight = UITableView.automaticDimension
+        coursesTableView.estimatedRowHeight = 50
+        coursesTableView.tableFooterView = UIView()
         
     }
     
@@ -42,6 +50,15 @@ class ViewController: UIViewController {
             self.coursesTableView.reloadData()
             
         }
+    }
+    
+    fileprivate func setupNavBar() {
+        navigationItem.title = "Courses"
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.backgroundColor = .yellow
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.barTintColor = UIColor.rgb(r: 50, g: 199, b: 242)
+        navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
     }
     
 }
@@ -61,3 +78,17 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource{
     
 }
 
+class CustomNavigationController: UINavigationController {
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+}
+
+extension UIColor {
+    static let mainTextBlue = UIColor.rgb(r: 7, g: 71, b: 89)
+    static let highlightColor = UIColor.rgb(r: 50, g: 199, b: 242)
+    
+    static func rgb(r: CGFloat, g: CGFloat, b: CGFloat) -> UIColor {
+        return UIColor(red: r/255, green: g/255, blue: b/255, alpha: 1)
+    }
+}
